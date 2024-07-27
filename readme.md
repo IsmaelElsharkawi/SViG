@@ -1,4 +1,4 @@
-# SViG
+# SViG: A Similarity-thresholded Approach for Vision Graph Neural Networks
 Under review in AAAI
 
 ## Requirements
