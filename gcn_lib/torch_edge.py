@@ -50,6 +50,12 @@ def select_neighbors(distance, distribution_theshold):
     return adjacency_matrix
 
 def get_edge_indices(adj_matrices, n_points):
+    """Converts the adjacency matrix to an edge list
+    Args:
+        adj_matrices: (batch_size, num_points, num_points), num_points
+    Returns:
+        edge_list: (2, number_of_edges_in_the_whole_batch)
+    """
     # Get the size of each adjacency matrix
     # size = adj_matrices[0].shape[0]
 
@@ -62,30 +68,30 @@ def get_edge_indices(adj_matrices, n_points):
     # edge_index = torch.nonzero(sparse_adj_matrix, as_tuple=False).t().to(adj_matrices.device)  
     # del sparse_adj_matrix
     ######################## EFFICIENT IMPLEMENTATION
-    temp = torch.nonzero(adj_matrices, as_tuple=False)
-    temp[:,0] = temp[:,0] * n_points 
-    temp[:,1] = temp[:,0] + temp[:,1] 
-    temp[:,2] = temp[:,0] + temp[:,2] 
-    edge_index = temp[:,1:].t()
+    temp_edge_index = torch.nonzero(adj_matrices, as_tuple=False)
+    temp_edge_index[:,0] = temp_edge_index[:,0] * n_points 
+    temp_edge_index[:,1] = temp_edge_index[:,0] + temp_edge_index[:,1] 
+    temp_edge_index[:,2] = temp_edge_index[:,0] + temp_edge_index[:,2] 
+    edge_index = temp_edge_index[:,1:].t()
     if not adj_matrices.bool().any():
         print(adj_matrices)
         print(edge_index)
-        # Something went terribly wrong
+        # Something went terribly wrong, stop the training
     return edge_index
 
-def dense_knn_matrix(x, k):
+def dense_knn_matrix(x, threshold):
     """Get KNN based on the pairwise distance.
     Args:
         x: (batch_size, num_dims, num_points, 1)
-        k: int, represents the threshold or the k (in case of an error)
+        threshold: int, represents the threshold or the k (in case of an error)
     Returns:
-        nearest neighbors: (batch_size, num_points, k) (batch_size, num_points, k)
+        nearest neighbors: (2, number_of_edges_for_all_data_points_in_a_batch)
     """
     with torch.no_grad():
         x = x.transpose(2, 1).squeeze(-1)
         batch_size, n_points, n_dims = x.shape
         dist = pairwise_distance(x.detach())
-        adjacency_matrix = select_neighbors(dist, k)
+        adjacency_matrix = select_neighbors(dist, threshold)
         adjacency_matrix = adjacency_matrix.to(x.device)
 
         if adjacency_matrix is not None:
@@ -96,8 +102,8 @@ def dense_knn_matrix(x, k):
             #resotring to k-NN in case the adjacency matrix is not initialized correctly
             #Something must have gone terribly wrong if this branch is taken in any layer
             _, nn_idx = torch.topk(-dist, k=9) 
-            max_k = k
-            center_idx = torch.arange(0, n_points, device=x.device).repeat(batch_size, max_k, 1).transpose(2, 1)
+            k = threshold
+            center_idx = torch.arange(0, n_points, device=x.device).repeat(batch_size, k, 1).transpose(2, 1)
             return torch.stack((nn_idx, center_idx), dim=0)
 
 
@@ -105,13 +111,13 @@ class DenseDilatedKnnGraph(nn.Module):
     """
     Find the neighbors' indices based on dilated knn
     """
-    def __init__(self, k=9):
+    def __init__(self, threshold=0.9):
         super(DenseDilatedKnnGraph, self).__init__()
-        self.k = k
+        self.threshold = threshold
         
     def forward(self, x):
         #### normalize
         x = F.normalize(x, p=2.0, dim=1)
         ####
-        edge_index = dense_knn_matrix(x, self.k)
+        edge_index = dense_knn_matrix(x, self.threshold)
         return edge_index

@@ -53,10 +53,9 @@ class DyGraphConv2d(GraphConv2d):
     """
     Dynamic graph convolution layer
     """
-    def __init__(self, in_channels, out_channels, threshold=9, conv='edge', act='relu',
+    def __init__(self, in_channels, out_channels, threshold=0.9, conv='edge', act='relu',
                  norm=None, bias=True):
         super(DyGraphConv2d, self).__init__(in_channels, out_channels, conv, act, norm, bias)
-        self.k = threshold
         self.dilated_knn_graph = DenseDilatedKnnGraph(threshold)
 
     def forward(self, x):

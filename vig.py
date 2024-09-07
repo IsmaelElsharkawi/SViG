@@ -107,7 +107,6 @@ class DeepGCN(torch.nn.Module):
         thresholds = [] #This is used for the thresholding in each layer
         current = opt.start_thresh
         for i_layer in range(self.n_blocks):
-            # current = current - i_layer*0.01
             thresholds.append( current )
             current = current - opt.dec
         print('thresholds', thresholds)
@@ -151,7 +150,7 @@ class DeepGCN(torch.nn.Module):
 def vig_ti_224_gelu(pretrained=False, **kwargs):
     class OptInit:
         def __init__(self, starting_threshold, decrement, num_classes=1000, drop_path_rate=0.0, drop_rate=0.0, threshold=9, **kwargs):
-            self.k = threshold # neighbor num (default:9)
+            self.threshold = threshold # neighbor num (default:0.9)
             self.conv = 'mr' # graph conv layer {edge, mr}
             self.act = 'gelu' # activation layer {relu, prelu, leakyrelu, gelu, hswish}
             self.norm = 'batch' # batch or instance normalization {batch, instance}
