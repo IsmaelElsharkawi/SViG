@@ -1,5 +1,5 @@
-# SViG
-Under review in AAAI
+# SViG: A Similarity-thresholded Approach for Vision Graph Neural Networks
+Under review in WACV
 
 ## Requirements
 - Pytorch 1.7.1
@@ -20,13 +20,16 @@ Please, use the following commands to install the requirements:
 
 Each checkpoint has two checkpoints, one for the model updated without using EMA, and an EMA-model. If the EMA column is checked, please use `--model-ema` when evaluating.
 
-|Starting Threshold|Decrement|Top-1|EMA|Github Release|
-|-|-|-|-|-|
-|0.86|0.03|74.6|&cross;|[Github Release]()|
-|0.89|0.03|74.6|&cross;|[Github Release]()|
-|0.91|0.03|74.5|&check;|[Github Release]()|
-|0.93|0.03|74.4|&check;|[Github Release]()|
-|0.96|0.03|74.2|&check;|[Github Release]()|
+|Starting Threshold|Decrement|Top-1|EMA|
+|-|-|-|-|
+|0.86|0.03|74.6|&cross;|
+|0.89|No Decrement|74.1|&check;|
+|0.89|0.02|74.2|&check;|
+|0.89|0.03|74.6|&cross;|
+|0.89|0.04|74.0|&check;|
+|0.91|0.03|74.5|&check;|
+|0.93|0.03|74.4|&check;|
+|0.96|0.03|74.2|&check;|
 
 
 <!-- Data preparation follows the [official pytorch example](https://github.com/pytorch/examples/tree/main/imagenet) -->

@@ -59,4 +59,3 @@ dependencies:
       - torchaudio==0.7.2
       - torchprofile==0.0.4
       - torchvision==0.8.2+cu110
-prefix: /home/ismaill/MScResearch/dependencies/miniconda3/envs/ViGEnv
