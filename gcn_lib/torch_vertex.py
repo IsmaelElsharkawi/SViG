@@ -25,8 +25,8 @@ class MRConv2d(nn.Module):
         x_all_batches = x_all_batches.permute(1, 0, 2) ## C, B, N
         x_all_batches = x_all_batches.reshape(C, -1, 1).squeeze(-1) ## C, N*B 
         x_all_batches = x_all_batches.permute(1,0) ##    N*B ,C
-        x_i = x_all_batches[edge_index[0]] #Source nodes
-        x_j = x_all_batches[edge_index[1]] #Destination nodes
+        x_i = x_all_batches[edge_index[0]] #Destination nodes
+        x_j = x_all_batches[edge_index[1]] #Source nodes (neighborhood)
         x_j = x_j - x_i ## number_of_edges, C
         #Torch scatter doesn't support half operations
         out = scatter(src=x_j.to(torch.float32), index=edge_index[0], dim=0, dim_size=x_all_batches.size(0), reduce='max') ## N(total), C
