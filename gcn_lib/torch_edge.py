@@ -1,7 +1,6 @@
 # 2024.07.26 -- Changed for building SViG 
 
-# 2022.06.17-Changed for building ViG model
-#            Huawei Technologies Co., Ltd. <foss@huawei.com>
+# Adapted from https://github.com/huawei-noah/Efficient-AI-Backbones/tree/master/vig_pytorch
 import math
 import torch
 from torch import nn

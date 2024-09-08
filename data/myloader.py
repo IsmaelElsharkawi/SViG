@@ -1,5 +1,4 @@
-# 2021.06.15-Changed for implementation of TNT model
-#            Huawei Technologies Co., Ltd. <foss@huawei.com>
+# Adapted from https://github.com/huawei-noah/Efficient-AI-Backbones/tree/master/vig_pytorch
 """ Loader Factory, Fast Collate, CUDA Prefetcher
 
 Prefetcher and Fast Collate inspired by NVIDIA APEX example at
