@@ -1,7 +1,6 @@
 # SViG: A Similarity-thresholded Approach for Vision Graph Neural Networks
 Accepted in IEEE Access, 2025
-
-## Paper: https://ieeexplore.ieee.org/document/10845790
+Link to Paper: https://ieeexplore.ieee.org/document/10845790
 
 ## Requirements
 - Pytorch 1.7.1
@@ -47,6 +46,21 @@ python -m torch.distributed.launch --nproc_per_node=8 train.py <ImageNet_path> -
 - Training SViG on 8 GPUs:
 ```
 python -m torch.distributed.launch --nproc_per_node=8 train.py <path_to_imagenet> --model vig_ti_224_gelu --sched cosine --epochs 300 --opt adamw -j 8 --warmup-lr 1e-6 --mixup .8 --cutmix 1.0 --model-ema --model-ema-decay 0.99996 --aa rand-m9-mstd0.5-inc1 --color-jitter 0.4 --warmup-epochs 20 --opt-eps 1e-8 --repeated-aug --remode pixel --reprob 0.25 --amp --lr 2e-3 --weight-decay .05 --drop 0 --drop-path .1 -b 128 --output <path_to_save_models> --start-thresh <starting_threshold> --dec <decrement_per_layer>
+```
+
+## To cite this work, please use the following bibTex
+```
+@ARTICLE{10845790,
+  author={Elsharkawi, Ismael and Sharara, Hossam and Rafea, Ahmed},
+  journal={IEEE Access}, 
+  title={SViG: A Similarity-thresholded Approach for Vision Graph Neural Networks}, 
+  year={2025},
+  volume={},
+  number={},
+  pages={1-1},
+  keywords={Computer vision;Computer architecture;Vectors;Graph neural networks;Transformers;Image edge detection;Point cloud compression;Image resolution;Image representation;Image classification;Graph Neural Networks;Vision Graph Neural Networks;Image Classification},
+  doi={10.1109/ACCESS.2025.3531691}
+}
 ```
 
 
