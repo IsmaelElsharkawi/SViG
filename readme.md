@@ -1,5 +1,7 @@
 # SViG: A Similarity-thresholded Approach for Vision Graph Neural Networks
-Under review in IEEE Access
+Accepted in IEEE Access, 2025
+
+## Paper: https://ieeexplore.ieee.org/document/10845790
 
 ## Requirements
 - Pytorch 1.7.1
