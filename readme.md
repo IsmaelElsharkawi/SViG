@@ -54,14 +54,14 @@ python -m torch.distributed.launch --nproc_per_node=8 train.py <path_to_imagenet
 @ARTICLE{10845790,
   author={Elsharkawi, Ismael and Sharara, Hossam and Rafea, Ahmed},
   journal={IEEE Access}, 
-  title={SViG: A Similarity-thresholded Approach for Vision Graph Neural Networks}, 
+  title={SViG: A Similarity-Thresholded Approach for Vision Graph Neural Networks}, 
   year={2025},
-  volume={},
+  volume={13},
   number={},
-  pages={1-1},
+  pages={19379-19387},
   keywords={Computer vision;Computer architecture;Vectors;Graph neural networks;Transformers;Image edge detection;Point cloud compression;Image resolution;Image representation;Image classification;Graph Neural Networks;Vision Graph Neural Networks;Image Classification},
-  doi={10.1109/ACCESS.2025.3531691}
-}
+  doi={10.1109/ACCESS.2025.3531691}}
+
 ```
 
 
